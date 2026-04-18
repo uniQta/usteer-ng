@@ -172,8 +172,23 @@ usteer_check_request(struct sta_info *si, enum usteer_event_type type)
 	struct uevent ev = {
 		.si_cur = si,
 	};
+	int hard_limit;
 	int min_signal;
 	bool ret = true;
+
+	if (type == EVENT_TYPE_PROBE && !si->connected) {
+		hard_limit = si->node->freq < 4000 ?
+			config.initial_probe_min_signal_lowband :
+			config.initial_probe_min_signal_highband;
+
+		if (si->signal < hard_limit) {
+			ev.reason = UEV_REASON_LOW_SIGNAL;
+			ev.threshold.cur = si->signal;
+			ev.threshold.ref = hard_limit;
+			ret = false;
+			goto out;
+		}
+	}
 
 	if (type == EVENT_TYPE_PROBE && !config.probe_steering)
 		goto out;

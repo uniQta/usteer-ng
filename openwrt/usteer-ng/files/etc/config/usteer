@@ -66,6 +66,12 @@ config usteer
 	# Related: should be equal to or higher than `min_snr` and `band_steering_min_snr`
 	#option min_connect_snr 0
 
+	# Initial hard limit for unconnected probe requests on low band (2.4 GHz)
+	#option initial_probe_min_signal_lowband -88
+
+	# Initial hard limit for unconnected probe requests on high band (5/6 GHz)
+	#option initial_probe_min_signal_highband -82
+
 	# Minimum signal-to-noise ratio or signal level (dBm) to remain connected
 	# Related: should be equal to or lower than `min_connect_snr` and lower than `band_steering_min_snr`
 	#option min_snr 0

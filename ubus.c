@@ -166,6 +166,8 @@ struct cfg_item {
 	_cfg(U32, reassociation_delay), \
 	_cfg(ARRAY_CB, aggressiveness_mac_list), \
 	_cfg(I32, min_connect_snr), \
+	_cfg(I32, initial_probe_min_signal_lowband), \
+	_cfg(I32, initial_probe_min_signal_highband), \
 	_cfg(I32, min_snr), \
 	_cfg(U32, min_snr_kick_delay), \
 	_cfg(U32, steer_reject_timeout), \

@@ -127,6 +127,8 @@ void usteer_init_defaults(void)
 	config.roam_trigger_snr = 0;
 
 	config.min_snr_kick_delay = 5 * 1000;
+	config.initial_probe_min_signal_lowband = -88;
+	config.initial_probe_min_signal_highband = -82;
 
 	config.load_kick_enabled = false;
 	config.load_kick_threshold = 75;

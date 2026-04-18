@@ -642,6 +642,9 @@ usteer_update_send(void *c)
 void
 usteer_send_sta_update(struct sta_info *si)
 {
+	if (config.local_mode || !remote_fd.registered)
+		return;
+
 	void *c = usteer_update_init();
 	usteer_send_node(si->node, si);
 	usteer_update_send(c);
@@ -747,6 +750,7 @@ static void usteer_reload_timer(struct uloop_timeout *t) {
 	if (remote_fd.fd && remote_fd.registered) {
 		uloop_fd_delete(&remote_fd);
 		close(remote_fd.fd);
+		remote_fd.fd = -1;
 	}
 
 	if (config.local_mode)
@@ -768,15 +772,21 @@ static void usteer_reload_timer(struct uloop_timeout *t) {
 
 int usteer_interface_init(void)
 {
-	if (config.local_mode)
-		return -1;
+	uloop_timeout_cancel(&remote_timer);
+	uloop_timeout_cancel(&reload_timer);
+
+	reload_timer.cb = usteer_reload_timer;
+	if (config.local_mode) {
+		reload_timer.cb(&reload_timer);
+		return 0;
+	}
+
 	if (usteer_init_local_id())
 		return -1;
 
 	remote_timer.cb = usteer_send_update_timer;
 	remote_timer.cb(&remote_timer);
 
-	reload_timer.cb = usteer_reload_timer;
 	reload_timer.cb(&reload_timer);
 
 	return 0;

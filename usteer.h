@@ -185,6 +185,8 @@ struct usteer_config {
 	int32_t min_snr;
 	uint32_t min_snr_kick_delay;
 	int32_t min_connect_snr;
+	int32_t initial_probe_min_signal_lowband;
+	int32_t initial_probe_min_signal_highband;
 	uint32_t signal_diff_threshold;
 
 	uint32_t steer_reject_timeout;
