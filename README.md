@@ -31,3 +31,16 @@ The default settings are the best in most environments (many users overdo optimi
 ## Submitting patches
 
 usteer-ng is fully managed in Github. Please contribute via Pull-Requests to the "development" branch.
+## GitHub Actions build (aarch64_cortex-a53)
+
+This repository includes `.github/workflows/build.yml` for OpenWrt package builds on GitHub Actions.
+
+- Default OpenWrt version: `24.10.6`
+- Target architecture: `aarch64_cortex-a53`
+
+Run manually:
+1. Open **Actions** tab
+2. Select **Build usteer-ng (OpenWrt 24.10 aarch64_cortex-a53)**
+3. Click **Run workflow**
+
+The resulting `.ipk` is available in workflow artifacts.
